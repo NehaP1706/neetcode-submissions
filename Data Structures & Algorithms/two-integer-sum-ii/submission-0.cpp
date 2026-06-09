@@ -1,35 +1,14 @@
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& numbers, int target) {
-        int n = numbers.size();
-
-        int high = n - 1;
-        int low = 0;
-
-        int start = numbers[low] + numbers[high];
-
-        while(start != target)
-        {
-            if (start > target)
-            {
-                high--;
+    int removeDuplicates(vector<int>& nums) {
+        int n = nums.size(), l = 0, r = 0;
+        while (r < n) {
+            nums[l] = nums[r];
+            while (r < n && nums[r] == nums[l]) {
+                r++;
             }
-            else
-            {
-                low++;
-            }
-
-            start = numbers[low] + numbers[high];
+            l++;
         }
-
-        vector<int> ans;
-
-        //for (int i = 0; i<2; i++)
-        //{
-            ans.push_back(low + 1);
-            ans.push_back(high + 1);
-        //}
-
-        return ans;
+        return l;
     }
 };
