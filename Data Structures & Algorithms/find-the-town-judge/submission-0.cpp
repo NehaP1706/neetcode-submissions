@@ -1,18 +1,18 @@
 class Solution {
 public:
-    bool isAlienSorted(vector<string>& words, string order) {
-        int orderIndex[26];
-        for (int i = 0; i < order.size(); ++i)
-            orderIndex[order[i] - 'a'] = i;
+    int findJudge(int n, vector<vector<int>>& trust) {
+        vector<int> incoming(n + 1, 0), outgoing(n + 1, 0);
 
-        auto compare = [&](const string &a, const string &b) {
-            for (int i = 0; i < min(a.size(), b.size()); ++i) {
-                if (a[i] != b[i])
-                    return orderIndex[a[i] - 'a'] < orderIndex[b[i] - 'a'];
-            }
-            return a.size() < b.size();
-        };
+        for (auto& t : trust) {
+            outgoing[t[0]]++;
+            incoming[t[1]]++;
+        }
 
-        return is_sorted(words.begin(), words.end(), compare);
+        for (int i = 1; i <= n; i++) {
+            if (outgoing[i] == 0 && incoming[i] == n - 1)
+                return i;
+        }
+
+        return -1;
     }
 };
